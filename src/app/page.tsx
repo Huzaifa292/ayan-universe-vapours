@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import {
   ShoppingBag,
@@ -392,6 +392,89 @@ const HeroImage: React.FC = () => {
   );
 };
 
+const CosmicGalaxyBackground: React.FC = () => {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animationFrameId: number;
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    const handleResize = () => {
+      if (!canvas) return;
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    };
+    window.addEventListener("resize", handleResize);
+
+    const starColors = ["#ffffff", "#e9d5ff", "#c084fc", "#a855f7", "#60a5fa", "#38bdf8"];
+    const stars = Array.from({ length: 90 }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      size: Math.random() * 2.2 + 0.6,
+      speedX: (Math.random() - 0.5) * 0.22,
+      speedY: (Math.random() - 0.5) * 0.22,
+      opacity: Math.random() * 0.75 + 0.25,
+      twinkleSpeed: Math.random() * 0.025 + 0.01,
+      color: starColors[Math.floor(Math.random() * starColors.length)]
+    }));
+
+    let time = 0;
+    const render = () => {
+      time += 0.02;
+      ctx.clearRect(0, 0, width, height);
+
+      stars.forEach((star) => {
+        star.x += star.speedX;
+        star.y += star.speedY;
+
+        if (star.x < 0) star.x = width;
+        if (star.x > width) star.x = 0;
+        if (star.y < 0) star.y = height;
+        if (star.y > height) star.y = 0;
+
+        const currentOpacity = (Math.sin(time * 2 + star.twinkleSpeed * 100) * 0.35 + 0.65) * star.opacity;
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+        ctx.fillStyle = star.color;
+        ctx.globalAlpha = currentOpacity;
+        ctx.shadowBlur = star.size * 6;
+        ctx.shadowColor = star.color;
+        ctx.fill();
+      });
+
+      animationFrameId = requestAnimationFrame(render);
+    };
+
+    render();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
+
+  return (
+    <div className="parallax-bg-wrapper">
+      {/* Fullscreen Animated Cosmic Universe Galaxy Layer */}
+      <div className="cosmic-galaxy-layer" />
+      {/* Pulsing Cosmic Center Nebula Core */}
+      <div className="cosmic-nebula-core" />
+      {/* Dynamic Twinkling Floating Stardust Canvas */}
+      <canvas ref={canvasRef} className="cosmic-stars-canvas" />
+      {/* Ambient Grid Overlay */}
+      <div className="grid-bg-overlay" />
+      {/* Subtle Vignette Overlay for Crisp Readability */}
+      <div className="cosmic-vignette-overlay" />
+    </div>
+  );
+};
+
 function AyanUniverseStore() {
   const { setIsCartOpen, cartCount } = useCart();
   const [activeColor, setActiveColor] = useState<string>("#00f0ff"); // Default Cyan
@@ -503,13 +586,8 @@ function AyanUniverseStore() {
 
   return (
     <div className="app-container">
-      {/* Background Decorators with Scroll Parallax Wrapper */}
-      <div className="parallax-bg-wrapper">
-        <div className="grid-bg-overlay" />
-        <div className="ambient-aurora aurora-1" />
-        <div className="ambient-aurora aurora-2" />
-        <div className="ambient-aurora aurora-3" />
-      </div>
+      {/* Dynamic Animated Cosmic Universe Galaxy Background */}
+      <CosmicGalaxyBackground />
 
       {/* Top Luxury Announcement Bar */}
       <div className="top-announcement-bar">

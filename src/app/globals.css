@@ -73,28 +73,104 @@ button {
   background: rgba(168, 85, 247, 0.6);
 }
 
-/* Ambient Background Grid & Glows with Parallax Wrapper */
+/* Ambient Background Grid & Cosmic Universe Wrapper */
 .parallax-bg-wrapper {
   position: fixed;
-  inset: -120px;
+  inset: 0;
   pointer-events: none;
   z-index: -10;
-  transform: translate3d(0, calc(var(--scroll-y, 0) * 0.12px), -80px) rotateX(1deg);
-  transform-style: preserve-3d;
-  perspective: 1000px;
-  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  background-color: #030108;
+}
+
+/* Dynamic Cosmic Galaxy Background Layer (Using uploaded reference) */
+.cosmic-galaxy-layer {
+  position: absolute;
+  top: -12%;
+  left: -12%;
+  width: 124%;
+  height: 124%;
+  background-image: url('/images/universe-galaxy-bg.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  opacity: 0.78;
+  filter: contrast(1.2) brightness(1.05) saturate(1.25);
+  animation: cosmicGalaxyDrift 32s ease-in-out infinite alternate;
   will-change: transform;
+}
+
+@keyframes cosmicGalaxyDrift {
+  0% {
+    transform: scale(1) rotate(0deg) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: scale(1.12) rotate(2deg) translate3d(-20px, 15px, 0);
+  }
+  100% {
+    transform: scale(1.18) rotate(-1.5deg) translate3d(20px, -20px, 0);
+  }
+}
+
+/* Pulsing Cosmic Nebula Core */
+.cosmic-nebula-core {
+  position: absolute;
+  top: 10%;
+  left: 15%;
+  width: 70%;
+  height: 70%;
+  background: radial-gradient(circle at center, rgba(168, 85, 247, 0.45) 0%, rgba(99, 102, 241, 0.3) 35%, rgba(147, 51, 234, 0.15) 60%, transparent 80%);
+  filter: blur(80px);
+  opacity: 0.85;
+  animation: nebulaPulseGrow 10s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+
+@keyframes nebulaPulseGrow {
+  0% {
+    opacity: 0.6;
+    transform: scale(0.92) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2) rotate(12deg);
+  }
+  100% {
+    opacity: 0.75;
+    transform: scale(1.08) rotate(-8deg);
+  }
+}
+
+/* Floating Stardust Canvas */
+.cosmic-stars-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.9;
 }
 
 .grid-bg-overlay {
   position: absolute;
   inset: 0;
   background-image: 
-    linear-gradient(rgba(168, 85, 247, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(168, 85, 247, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(168, 85, 247, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168, 85, 247, 0.04) 1px, transparent 1px);
   background-size: 50px 50px;
   pointer-events: none;
-  z-index: -2;
+  z-index: 2;
+}
+
+/* Cosmic Vignette for content readability */
+.cosmic-vignette-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(5, 5, 8, 0.1) 0%, rgba(5, 5, 8, 0.55) 70%, rgba(3, 1, 8, 0.88) 100%),
+              linear-gradient(to bottom, rgba(5, 5, 8, 0.35) 0%, rgba(5, 5, 8, 0.05) 30%, rgba(5, 5, 8, 0.35) 80%, rgba(3, 1, 8, 0.85) 100%);
+  pointer-events: none;
+  z-index: 3;
 }
 
 .ambient-aurora {
