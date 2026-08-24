@@ -381,16 +381,6 @@ const HeroImage: React.FC = () => {
           src="/images/hero-twin-pods.png"
           alt="Ayan Universe Twin Cyber Vape Devices"
           className="hero-twin-pods-img"
-          style={{
-            width: "100%",
-            maxWidth: "360px",
-            height: "auto",
-            borderRadius: "22px",
-            objectFit: "cover",
-            display: "block",
-            transform: "translateZ(30px)",
-            filter: "drop-shadow(0 15px 35px rgba(0,0,0,0.85))"
-          }}
         />
       </div>
     </div>
@@ -410,6 +400,17 @@ const CosmicGalaxyBackground: React.FC = () => {
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
+    let mouseX = width / 2;
+    let mouseY = height / 2;
+    let targetMouseX = width / 2;
+    let targetMouseY = height / 2;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      targetMouseX = e.clientX;
+      targetMouseY = e.clientY;
+    };
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+
     const handleResize = () => {
       if (!canvas) return;
       width = canvas.width = window.innerWidth;
@@ -417,11 +418,12 @@ const CosmicGalaxyBackground: React.FC = () => {
     };
     window.addEventListener("resize", handleResize);
 
-    // 1. Cosmic Space Starfield & Galaxy Particles (300+ particles)
+    // 1. Multi-Layered Cosmic Space Starfield & Milky Way Galaxy Band (380+ particles)
     interface StarParticle {
       x: number;
       y: number;
       size: number;
+      baseSize: number;
       speedX: number;
       speedY: number;
       opacity: number;
@@ -429,34 +431,36 @@ const CosmicGalaxyBackground: React.FC = () => {
       twinkleOffset: number;
       color: string;
       glowColor: string;
-      layer: "distant" | "galaxy_band" | "bokeh";
+      layer: "distant" | "milky_way" | "cosmic_dust";
     }
 
-    const bandColors = [
-      "#ffffff", "#fbcfe8", "#f472b6", "#ec4899", 
-      "#e879f9", "#c084fc", "#a855f7", "#818cf8", 
-      "#60a5fa", "#38bdf8", "#67e8f9"
+    const milkyWayColors = [
+      "#ffffff", "#fdf4ff", "#fae8ff", "#f5d0fe",
+      "#f472b6", "#ec4899", "#d946ef", "#c084fc",
+      "#a855f7", "#818cf8", "#60a5fa", "#38bdf8"
     ];
-    const bokehColors = [
-      "rgba(236, 72, 153, 0.65)",
-      "rgba(168, 85, 247, 0.65)",
-      "rgba(59, 130, 246, 0.55)",
-      "rgba(192, 132, 252, 0.75)",
-      "rgba(255, 255, 255, 0.85)"
+
+    const dustColors = [
+      "rgba(244, 114, 182, 0.7)",
+      "rgba(217, 70, 239, 0.75)",
+      "rgba(168, 85, 247, 0.8)",
+      "rgba(96, 165, 250, 0.65)",
+      "rgba(255, 255, 255, 0.9)"
     ];
 
     const particles: StarParticle[] = [];
 
-    // Distant background starfield
-    for (let i = 0; i < 110; i++) {
+    // Distant background twinkling stars (140 stars)
+    for (let i = 0; i < 140; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        size: Math.random() * 1.5 + 0.5,
+        size: Math.random() * 1.6 + 0.4,
+        baseSize: Math.random() * 1.6 + 0.4,
         speedX: (Math.random() - 0.5) * 0.12,
         speedY: (Math.random() - 0.5) * 0.12,
-        opacity: Math.random() * 0.7 + 0.3,
-        twinkleSpeed: Math.random() * 0.03 + 0.01,
+        opacity: Math.random() * 0.75 + 0.25,
+        twinkleSpeed: Math.random() * 0.035 + 0.01,
         twinkleOffset: Math.random() * Math.PI * 2,
         color: "#ffffff",
         glowColor: "#c084fc",
@@ -464,46 +468,48 @@ const CosmicGalaxyBackground: React.FC = () => {
       });
     }
 
-    // Dense Galaxy Horizontal Band (concentrated across horizontal space disk)
-    for (let i = 0; i < 160; i++) {
-      const spreadY = (Math.random() - 0.5) * (Math.random() - 0.5) * height * 0.6;
+    // Dense Horizontal Milky Way Galaxy Swirl (210 particles)
+    for (let i = 0; i < 210; i++) {
+      const spreadY = (Math.random() - 0.5) * (Math.random() - 0.5) * height * 0.65;
       const centerY = height * 0.48 + spreadY;
-      const color = bandColors[Math.floor(Math.random() * bandColors.length)];
+      const color = milkyWayColors[Math.floor(Math.random() * milkyWayColors.length)];
 
       particles.push({
         x: Math.random() * width,
         y: centerY,
-        size: Math.random() * 2.6 + 0.8,
-        speedX: (Math.random() * 0.3 + 0.06) * (Math.random() > 0.5 ? 1 : -1),
+        size: Math.random() * 2.8 + 0.7,
+        baseSize: Math.random() * 2.8 + 0.7,
+        speedX: (Math.random() * 0.35 + 0.08) * (Math.random() > 0.5 ? 1 : -1),
         speedY: (Math.random() - 0.5) * 0.1,
-        opacity: Math.random() * 0.85 + 0.25,
-        twinkleSpeed: Math.random() * 0.04 + 0.015,
+        opacity: Math.random() * 0.9 + 0.2,
+        twinkleSpeed: Math.random() * 0.045 + 0.015,
         twinkleOffset: Math.random() * Math.PI * 2,
         color: color,
         glowColor: color,
-        layer: "galaxy_band"
+        layer: "milky_way"
       });
     }
 
-    // Floating Bokeh Orbs
-    for (let i = 0; i < 22; i++) {
-      const color = bokehColors[Math.floor(Math.random() * bokehColors.length)];
+    // Floating glowing cosmic dust motes & light orbs (30 particles)
+    for (let i = 0; i < 30; i++) {
+      const color = dustColors[Math.floor(Math.random() * dustColors.length)];
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
         size: Math.random() * 7 + 3.5,
-        speedX: (Math.random() - 0.5) * 0.25,
-        speedY: (Math.random() - 0.5) * 0.2,
-        opacity: Math.random() * 0.5 + 0.2,
+        baseSize: Math.random() * 7 + 3.5,
+        speedX: (Math.random() - 0.5) * 0.22,
+        speedY: (Math.random() - 0.5) * 0.18,
+        opacity: Math.random() * 0.55 + 0.25,
         twinkleSpeed: Math.random() * 0.02 + 0.008,
         twinkleOffset: Math.random() * Math.PI * 2,
         color: color,
         glowColor: color,
-        layer: "bokeh"
+        layer: "cosmic_dust"
       });
     }
 
-    // Shooting Stars
+    // Shooting Stars system (Comets)
     interface ShootingStar {
       x: number;
       y: number;
@@ -521,9 +527,9 @@ const CosmicGalaxyBackground: React.FC = () => {
     const launchShootingStar = () => {
       shootingStars[0] = {
         x: Math.random() * width * 0.8,
-        y: Math.random() * height * 0.4,
-        length: Math.random() * 75 + 45,
-        speed: Math.random() * 11 + 9,
+        y: Math.random() * height * 0.45,
+        length: Math.random() * 90 + 50,
+        speed: Math.random() * 14 + 10,
         angle: Math.PI / 4 + (Math.random() - 0.5) * 0.2,
         opacity: 1,
         active: true
@@ -531,28 +537,31 @@ const CosmicGalaxyBackground: React.FC = () => {
     };
 
     const shootingStarTimer = setInterval(() => {
-      if (Math.random() > 0.4) {
+      if (Math.random() > 0.35) {
         launchShootingStar();
       }
-    }, 4500);
+    }, 3800);
 
     let time = 0;
     const render = () => {
       time += 0.02;
+      mouseX += (targetMouseX - mouseX) * 0.05;
+      mouseY += (targetMouseY - mouseY) * 0.05;
+
       const flarePulse = Math.sin(time * 1.5) * 0.15 + 0.85;
 
       ctx.clearRect(0, 0, width, height);
 
-      // 1. Draw Supernova Horizontal Light Flare
-      const centerX = width * 0.5;
-      const centerY = height * 0.48;
+      // 1. Draw Supernova Horizontal Light Flare in the Center
+      const centerX = width * 0.5 + (mouseX - width / 2) * 0.03;
+      const centerY = height * 0.48 + (mouseY - height / 2) * 0.03;
 
       // Outer wide horizontal disk light
-      const rayGradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, width * 0.45);
-      rayGradient.addColorStop(0, "rgba(255, 255, 255, 0.4)");
-      rayGradient.addColorStop(0.12, "rgba(216, 70, 239, 0.3)");
-      rayGradient.addColorStop(0.35, "rgba(168, 85, 247, 0.18)");
-      rayGradient.addColorStop(0.65, "rgba(59, 130, 246, 0.06)");
+      const rayGradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, width * 0.48);
+      rayGradient.addColorStop(0, "rgba(255, 255, 255, 0.45)");
+      rayGradient.addColorStop(0.12, "rgba(244, 114, 182, 0.35)");
+      rayGradient.addColorStop(0.35, "rgba(168, 85, 247, 0.22)");
+      rayGradient.addColorStop(0.65, "rgba(59, 130, 246, 0.08)");
       rayGradient.addColorStop(1, "transparent");
 
       ctx.save();
@@ -565,36 +574,46 @@ const CosmicGalaxyBackground: React.FC = () => {
       ctx.restore();
 
       // Blinding Center Starburst Core
-      const coreGradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, 65 * flarePulse);
-      coreGradient.addColorStop(0, "rgba(255, 255, 255, 0.95)");
-      coreGradient.addColorStop(0.2, "rgba(244, 114, 182, 0.75)");
-      coreGradient.addColorStop(0.55, "rgba(168, 85, 247, 0.4)");
+      const coreGradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, 70 * flarePulse);
+      coreGradient.addColorStop(0, "rgba(255, 255, 255, 0.98)");
+      coreGradient.addColorStop(0.2, "rgba(244, 114, 182, 0.8)");
+      coreGradient.addColorStop(0.55, "rgba(168, 85, 247, 0.45)");
       coreGradient.addColorStop(1, "transparent");
 
       ctx.beginPath();
-      ctx.arc(centerX, centerY, 65 * flarePulse, 0, Math.PI * 2);
+      ctx.arc(centerX, centerY, 70 * flarePulse, 0, Math.PI * 2);
       ctx.fillStyle = coreGradient;
-      ctx.shadowBlur = 35;
+      ctx.shadowBlur = 40;
       ctx.shadowColor = "#d946ef";
       ctx.fill();
 
       // Horizontal Lens Flare Beam
-      const beamGradient = ctx.createLinearGradient(centerX - 280 * flarePulse, centerY, centerX + 280 * flarePulse, centerY);
+      const beamGradient = ctx.createLinearGradient(centerX - 300 * flarePulse, centerY, centerX + 300 * flarePulse, centerY);
       beamGradient.addColorStop(0, "transparent");
-      beamGradient.addColorStop(0.5, "rgba(255, 255, 255, 0.8)");
+      beamGradient.addColorStop(0.5, "rgba(255, 255, 255, 0.9)");
       beamGradient.addColorStop(1, "transparent");
 
       ctx.beginPath();
-      ctx.ellipse(centerX, centerY, 280 * flarePulse, 2.5, 0, 0, Math.PI * 2);
+      ctx.ellipse(centerX, centerY, 300 * flarePulse, 2.8, 0, 0, Math.PI * 2);
       ctx.fillStyle = beamGradient;
-      ctx.shadowBlur = 18;
+      ctx.shadowBlur = 22;
       ctx.shadowColor = "#c084fc";
       ctx.fill();
 
-      // 2. Draw Stars & Galaxy Particles
+      // 2. Draw Stars & Galaxy Particles with Subtle Mouse Gravity
       particles.forEach((p) => {
         p.x += p.speedX;
         p.y += p.speedY;
+
+        // Subtle interactive mouse reaction
+        const dx = mouseX - p.x;
+        const dy = mouseY - p.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 180 && dist > 0) {
+          const force = (180 - dist) / 180;
+          p.x -= (dx / dist) * force * 0.6;
+          p.y -= (dy / dist) * force * 0.6;
+        }
 
         if (p.x < 0) p.x = width;
         if (p.x > width) p.x = 0;
@@ -606,13 +625,13 @@ const CosmicGalaxyBackground: React.FC = () => {
         ctx.save();
         ctx.beginPath();
 
-        if (p.layer === "bokeh") {
+        if (p.layer === "cosmic_dust") {
           ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
           ctx.fillStyle = p.color;
-          ctx.globalAlpha = currentOpacity * 0.6;
-          ctx.shadowBlur = p.size * 3;
+          ctx.globalAlpha = currentOpacity * 0.65;
+          ctx.shadowBlur = p.size * 3.5;
           ctx.shadowColor = p.glowColor;
-        } else if (p.layer === "galaxy_band") {
+        } else if (p.layer === "milky_way") {
           ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
           ctx.fillStyle = p.color;
           ctx.globalAlpha = currentOpacity;
@@ -621,7 +640,7 @@ const CosmicGalaxyBackground: React.FC = () => {
         } else {
           ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
           ctx.fillStyle = p.color;
-          ctx.globalAlpha = currentOpacity * 0.8;
+          ctx.globalAlpha = currentOpacity * 0.85;
           ctx.shadowBlur = p.size * 2;
           ctx.shadowColor = p.glowColor;
         }
@@ -655,9 +674,9 @@ const CosmicGalaxyBackground: React.FC = () => {
         ctx.moveTo(tailX, tailY);
         ctx.lineTo(star.x, star.y);
         ctx.strokeStyle = grad;
-        ctx.lineWidth = 2;
-        ctx.shadowBlur = 12;
-        ctx.shadowColor = "#a855f7";
+        ctx.lineWidth = 2.2;
+        ctx.shadowBlur = 14;
+        ctx.shadowColor = "#e879f9";
         ctx.stroke();
         ctx.restore();
       });
@@ -669,6 +688,7 @@ const CosmicGalaxyBackground: React.FC = () => {
 
     return () => {
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("mousemove", handleMouseMove);
       clearInterval(shootingStarTimer);
       cancelAnimationFrame(animationFrameId);
     };
@@ -1241,40 +1261,9 @@ function AyanUniverseStore() {
                 </div>
               </div>
 
-              {/* Interactive 3D floating Hero Pod Image & Color Studio */}
-              <div className="reveal-right reveal-delay-2" style={{ width: "100%", position: "relative" }}>
-                <div className="hero-video-glow" style={{ position: "absolute", top: "5%", left: "5%", width: "90%", height: "90%", borderRadius: "50%", background: `radial-gradient(circle, rgba(168, 85, 247, 0.45) 0%, rgba(147, 51, 234, 0.15) 50%, transparent 70%)`, filter: "blur(60px)", opacity: 0.75, zIndex: -1 }} />
-                <div className="hero-pedestal-glow" />
+              {/* Interactive 3D floating Hero Pod Image (Clean & Crisp) */}
+              <div className="reveal-right reveal-delay-2" style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", position: "relative" }}>
                 <HeroImage />
-
-                {/* Interactive Pod Color & Flavor Selector */}
-                <div className="hero-flavor-studio" style={{ background: "rgba(18, 12, 32, 0.8)", borderColor: "rgba(168, 85, 247, 0.3)" }}>
-                  <span className="flavor-studio-title" style={{ color: "#c084fc" }}>✨ Interactive Flavor Aura Studio:</span>
-                  <div className="flavor-capsules-list">
-                    {[
-                      { name: "Cyber Purple", color: "#a855f7", glow: "rgba(168, 85, 247, 0.5)" },
-                      { name: "Electric Cyan", color: "#00f0ff", glow: "rgba(0, 240, 255, 0.5)" },
-                      { name: "Ice Blue", color: "#3b82f6", glow: "rgba(59, 130, 246, 0.5)" },
-                      { name: "Neon Amber", color: "#f59e0b", glow: "rgba(245, 158, 11, 0.5)" },
-                      { name: "Lush Berry", color: "#ec4899", glow: "rgba(236, 72, 153, 0.5)" }
-                    ].map((flavor) => (
-                      <div
-                        key={flavor.name}
-                        className={`flavor-capsule ${activeColor === flavor.color ? "active" : ""}`}
-                        style={{
-                          "--capsule-color": flavor.color,
-                          "--capsule-glow": flavor.glow,
-                          background: "rgba(25, 16, 44, 0.9)",
-                          color: "#ffffff"
-                        } as React.CSSProperties}
-                        onClick={() => setActiveColor(flavor.color)}
-                      >
-                        <span className="flavor-dot" />
-                        <span>{flavor.name}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
               </div>
             </section>
 
