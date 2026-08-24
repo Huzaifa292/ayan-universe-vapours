@@ -3924,7 +3924,7 @@ a.quick-contact-card:hover .whatsapp-icon {
   right: 5%;
   height: 50px;
   border-radius: 50%;
-  background: radial-gradient(ellipse at center, rgba(168, 85, 247, 0.7) 0%, rgba(59, 130, 246, 0.35) 50%, transparent 80%);
+  background: radial-gradient(ellipse at center, rgba(168, 85, 247, 0.65) 0%, rgba(147, 51, 234, 0.25) 50%, transparent 80%);
   filter: blur(25px);
   pointer-events: none;
   z-index: 0;

@@ -688,7 +688,7 @@ const CosmicGalaxyBackground: React.FC = () => {
 
 function AyanUniverseStore() {
   const { setIsCartOpen, cartCount } = useCart();
-  const [activeColor, setActiveColor] = useState<string>("#00f0ff"); // Default Cyan
+  const [activeColor, setActiveColor] = useState<string>("#a855f7"); // Default Luxury Purple
   const [selectedCategory, setSelectedCategory] = useState<"all" | "juice" | "pod" | "device" | "coil" | "accessory">("all");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [checkoutProduct, setCheckoutProduct] = useState<Product | null>(null);
@@ -1243,7 +1243,7 @@ function AyanUniverseStore() {
 
               {/* Interactive 3D floating Hero Pod Image & Color Studio */}
               <div className="reveal-right reveal-delay-2" style={{ width: "100%", position: "relative" }}>
-                <div className="hero-video-glow" style={{ position: "absolute", top: "5%", left: "5%", width: "90%", height: "90%", borderRadius: "50%", background: `radial-gradient(circle, #a855f7 0%, #3b82f6 40%, transparent 70%)`, filter: "blur(60px)", opacity: 0.75, zIndex: -1 }} />
+                <div className="hero-video-glow" style={{ position: "absolute", top: "5%", left: "5%", width: "90%", height: "90%", borderRadius: "50%", background: `radial-gradient(circle, rgba(168, 85, 247, 0.45) 0%, rgba(147, 51, 234, 0.15) 50%, transparent 70%)`, filter: "blur(60px)", opacity: 0.75, zIndex: -1 }} />
                 <div className="hero-pedestal-glow" />
                 <HeroImage />
 
