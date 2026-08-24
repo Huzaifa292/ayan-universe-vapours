@@ -83,20 +83,20 @@ button {
   background-color: #030107;
 }
 
-/* Dynamic Cosmic Galaxy Background Layer - Tuned for 100% Text Readability */
+/* Dynamic Purple Vapor Smoke Universe Background Layer */
 .cosmic-galaxy-layer {
   position: absolute;
-  top: -8%;
-  left: -8%;
-  width: 116%;
-  height: 116%;
+  top: -5%;
+  left: -5%;
+  width: 110%;
+  height: 110%;
   background-image: url('/images/universe-galaxy-bg.png');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  opacity: 0.68;
-  filter: contrast(1.15) brightness(0.85) saturate(1.2);
-  animation: cosmicGalaxyDrift 30s ease-in-out infinite alternate;
+  opacity: 0.88;
+  filter: contrast(1.15) brightness(1.02) saturate(1.25);
+  animation: cosmicGalaxyDrift 28s ease-in-out infinite alternate;
   will-change: transform;
 }
 
@@ -105,10 +105,10 @@ button {
     transform: scale(1) rotate(0deg) translate3d(0, 0, 0);
   }
   50% {
-    transform: scale(1.06) rotate(1.2deg) translate3d(-12px, 8px, 0);
+    transform: scale(1.05) rotate(0.8deg) translate3d(-10px, 6px, 0);
   }
   100% {
-    transform: scale(1.1) rotate(-1deg) translate3d(12px, -12px, 0);
+    transform: scale(1.08) rotate(-0.6deg) translate3d(10px, -10px, 0);
   }
 }
 
