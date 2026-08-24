@@ -573,30 +573,30 @@ const CosmicGalaxyBackground: React.FC = () => {
       ctx.fill();
       ctx.restore();
 
-      // Blinding Center Starburst Core
-      const coreGradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, 70 * flarePulse);
-      coreGradient.addColorStop(0, "rgba(255, 255, 255, 0.98)");
-      coreGradient.addColorStop(0.2, "rgba(244, 114, 182, 0.8)");
-      coreGradient.addColorStop(0.55, "rgba(168, 85, 247, 0.45)");
+      // Soft Glowing Center Starburst Core
+      const coreGradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, 60 * flarePulse);
+      coreGradient.addColorStop(0, "rgba(255, 255, 255, 0.45)");
+      coreGradient.addColorStop(0.3, "rgba(244, 114, 182, 0.28)");
+      coreGradient.addColorStop(0.6, "rgba(168, 85, 247, 0.15)");
       coreGradient.addColorStop(1, "transparent");
 
       ctx.beginPath();
-      ctx.arc(centerX, centerY, 70 * flarePulse, 0, Math.PI * 2);
+      ctx.arc(centerX, centerY, 60 * flarePulse, 0, Math.PI * 2);
       ctx.fillStyle = coreGradient;
-      ctx.shadowBlur = 40;
+      ctx.shadowBlur = 25;
       ctx.shadowColor = "#d946ef";
       ctx.fill();
 
       // Horizontal Lens Flare Beam
-      const beamGradient = ctx.createLinearGradient(centerX - 300 * flarePulse, centerY, centerX + 300 * flarePulse, centerY);
+      const beamGradient = ctx.createLinearGradient(centerX - 240 * flarePulse, centerY, centerX + 240 * flarePulse, centerY);
       beamGradient.addColorStop(0, "transparent");
-      beamGradient.addColorStop(0.5, "rgba(255, 255, 255, 0.9)");
+      beamGradient.addColorStop(0.5, "rgba(255, 255, 255, 0.45)");
       beamGradient.addColorStop(1, "transparent");
 
       ctx.beginPath();
-      ctx.ellipse(centerX, centerY, 300 * flarePulse, 2.8, 0, 0, Math.PI * 2);
+      ctx.ellipse(centerX, centerY, 240 * flarePulse, 2, 0, 0, Math.PI * 2);
       ctx.fillStyle = beamGradient;
-      ctx.shadowBlur = 22;
+      ctx.shadowBlur = 15;
       ctx.shadowColor = "#c084fc";
       ctx.fill();
 

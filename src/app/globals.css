@@ -80,10 +80,10 @@ button {
   pointer-events: none;
   z-index: -10;
   overflow: hidden;
-  background-color: #030108;
+  background-color: #030107;
 }
 
-/* Dynamic Cosmic Galaxy Background Layer (Using uploaded reference) */
+/* Dynamic Cosmic Galaxy Background Layer - Tuned for 100% Text Readability */
 .cosmic-galaxy-layer {
   position: absolute;
   top: -8%;
@@ -94,8 +94,8 @@ button {
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  opacity: 0.94;
-  filter: contrast(1.25) brightness(1.12) saturate(1.35);
+  opacity: 0.68;
+  filter: contrast(1.15) brightness(0.85) saturate(1.2);
   animation: cosmicGalaxyDrift 30s ease-in-out infinite alternate;
   will-change: transform;
 }
@@ -105,10 +105,10 @@ button {
     transform: scale(1) rotate(0deg) translate3d(0, 0, 0);
   }
   50% {
-    transform: scale(1.08) rotate(1.5deg) translate3d(-15px, 10px, 0);
+    transform: scale(1.06) rotate(1.2deg) translate3d(-12px, 8px, 0);
   }
   100% {
-    transform: scale(1.14) rotate(-1.2deg) translate3d(15px, -15px, 0);
+    transform: scale(1.1) rotate(-1deg) translate3d(12px, -12px, 0);
   }
 }
 
@@ -120,7 +120,7 @@ button {
   height: 100%;
   pointer-events: none;
   z-index: 1;
-  opacity: 1;
+  opacity: 0.75;
 }
 
 .grid-bg-overlay {
@@ -3930,7 +3930,7 @@ a.quick-contact-card:hover .whatsapp-icon {
   z-index: 0;
 }
 
-/* Hero Twin Cyber Pods Showcase - Pure, Clean & Crisp */
+/* Hero Twin Cyber Pods Showcase - Completely Seamless Floating Render */
 .hero-twin-pods-container {
   width: 100%;
   display: flex;
@@ -3947,27 +3947,28 @@ a.quick-contact-card:hover .whatsapp-icon {
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
-  animation: heroPodFloat 6s ease-in-out infinite alternate;
+  animation: heroPodFloat 5s ease-in-out infinite alternate;
 }
 
 @keyframes heroPodFloat {
   0% {
-    transform: translateY(0px);
+    transform: translateY(0px) scale(1);
   }
   50% {
-    transform: translateY(-8px);
+    transform: translateY(-10px) scale(1.015);
   }
   100% {
-    transform: translateY(3px);
+    transform: translateY(4px) scale(1);
   }
 }
 
 .hero-twin-pods-img {
   width: 100%;
-  max-width: 380px;
+  max-width: 440px;
   height: auto;
-  border-radius: 24px;
-  object-fit: cover;
+  border-radius: 0 !important;
+  object-fit: contain;
   display: block;
-  filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.9));
+  mix-blend-mode: screen;
+  filter: contrast(1.18) brightness(1.12);
 }
