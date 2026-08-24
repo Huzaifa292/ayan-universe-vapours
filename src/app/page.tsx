@@ -364,6 +364,7 @@ const HeroImage: React.FC = () => {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      className="hero-twin-pods-container"
       style={{
         width: "100%",
         display: "flex",
@@ -375,19 +376,23 @@ const HeroImage: React.FC = () => {
         transition: "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)"
       }}
     >
-      <img
-        src="/images/Gold-pro.png"
-        alt="Ayan Universe Gold Pro Device"
-        className="rotating-pod-png"
-        style={{
-          width: "100%",
-          maxWidth: "300px",
-          height: "auto",
-          objectFit: "contain",
-          filter: "drop-shadow(0 15px 30px rgba(0,0,0,0.55))",
-          transform: "translateZ(30px)"
-        }}
-      />
+      <div className="hero-twin-pods-card">
+        <img
+          src="/images/hero-twin-pods.png"
+          alt="Ayan Universe Twin Cyber Vape Devices"
+          className="hero-twin-pods-img"
+          style={{
+            width: "100%",
+            maxWidth: "360px",
+            height: "auto",
+            borderRadius: "22px",
+            objectFit: "cover",
+            display: "block",
+            transform: "translateZ(30px)",
+            filter: "drop-shadow(0 15px 35px rgba(0,0,0,0.85))"
+          }}
+        />
+      </div>
     </div>
   );
 };
