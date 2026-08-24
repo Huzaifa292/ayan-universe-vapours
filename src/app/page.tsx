@@ -412,40 +412,249 @@ const CosmicGalaxyBackground: React.FC = () => {
     };
     window.addEventListener("resize", handleResize);
 
-    const starColors = ["#ffffff", "#e9d5ff", "#c084fc", "#a855f7", "#60a5fa", "#38bdf8"];
-    const stars = Array.from({ length: 90 }, () => ({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      size: Math.random() * 2.2 + 0.6,
-      speedX: (Math.random() - 0.5) * 0.22,
-      speedY: (Math.random() - 0.5) * 0.22,
-      opacity: Math.random() * 0.75 + 0.25,
-      twinkleSpeed: Math.random() * 0.025 + 0.01,
-      color: starColors[Math.floor(Math.random() * starColors.length)]
-    }));
+    // 1. Cosmic Space Starfield & Galaxy Particles (300+ particles)
+    interface StarParticle {
+      x: number;
+      y: number;
+      size: number;
+      speedX: number;
+      speedY: number;
+      opacity: number;
+      twinkleSpeed: number;
+      twinkleOffset: number;
+      color: string;
+      glowColor: string;
+      layer: "distant" | "galaxy_band" | "bokeh";
+    }
+
+    const bandColors = [
+      "#ffffff", "#fbcfe8", "#f472b6", "#ec4899", 
+      "#e879f9", "#c084fc", "#a855f7", "#818cf8", 
+      "#60a5fa", "#38bdf8", "#67e8f9"
+    ];
+    const bokehColors = [
+      "rgba(236, 72, 153, 0.65)",
+      "rgba(168, 85, 247, 0.65)",
+      "rgba(59, 130, 246, 0.55)",
+      "rgba(192, 132, 252, 0.75)",
+      "rgba(255, 255, 255, 0.85)"
+    ];
+
+    const particles: StarParticle[] = [];
+
+    // Distant background starfield
+    for (let i = 0; i < 110; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        size: Math.random() * 1.5 + 0.5,
+        speedX: (Math.random() - 0.5) * 0.12,
+        speedY: (Math.random() - 0.5) * 0.12,
+        opacity: Math.random() * 0.7 + 0.3,
+        twinkleSpeed: Math.random() * 0.03 + 0.01,
+        twinkleOffset: Math.random() * Math.PI * 2,
+        color: "#ffffff",
+        glowColor: "#c084fc",
+        layer: "distant"
+      });
+    }
+
+    // Dense Galaxy Horizontal Band (concentrated across horizontal space disk)
+    for (let i = 0; i < 160; i++) {
+      const spreadY = (Math.random() - 0.5) * (Math.random() - 0.5) * height * 0.6;
+      const centerY = height * 0.48 + spreadY;
+      const color = bandColors[Math.floor(Math.random() * bandColors.length)];
+
+      particles.push({
+        x: Math.random() * width,
+        y: centerY,
+        size: Math.random() * 2.6 + 0.8,
+        speedX: (Math.random() * 0.3 + 0.06) * (Math.random() > 0.5 ? 1 : -1),
+        speedY: (Math.random() - 0.5) * 0.1,
+        opacity: Math.random() * 0.85 + 0.25,
+        twinkleSpeed: Math.random() * 0.04 + 0.015,
+        twinkleOffset: Math.random() * Math.PI * 2,
+        color: color,
+        glowColor: color,
+        layer: "galaxy_band"
+      });
+    }
+
+    // Floating Bokeh Orbs
+    for (let i = 0; i < 22; i++) {
+      const color = bokehColors[Math.floor(Math.random() * bokehColors.length)];
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        size: Math.random() * 7 + 3.5,
+        speedX: (Math.random() - 0.5) * 0.25,
+        speedY: (Math.random() - 0.5) * 0.2,
+        opacity: Math.random() * 0.5 + 0.2,
+        twinkleSpeed: Math.random() * 0.02 + 0.008,
+        twinkleOffset: Math.random() * Math.PI * 2,
+        color: color,
+        glowColor: color,
+        layer: "bokeh"
+      });
+    }
+
+    // Shooting Stars
+    interface ShootingStar {
+      x: number;
+      y: number;
+      length: number;
+      speed: number;
+      angle: number;
+      opacity: number;
+      active: boolean;
+    }
+
+    const shootingStars: ShootingStar[] = [
+      { x: 0, y: 0, length: 0, speed: 0, angle: 0, opacity: 0, active: false }
+    ];
+
+    const launchShootingStar = () => {
+      shootingStars[0] = {
+        x: Math.random() * width * 0.8,
+        y: Math.random() * height * 0.4,
+        length: Math.random() * 75 + 45,
+        speed: Math.random() * 11 + 9,
+        angle: Math.PI / 4 + (Math.random() - 0.5) * 0.2,
+        opacity: 1,
+        active: true
+      };
+    };
+
+    const shootingStarTimer = setInterval(() => {
+      if (Math.random() > 0.4) {
+        launchShootingStar();
+      }
+    }, 4500);
 
     let time = 0;
     const render = () => {
       time += 0.02;
+      const flarePulse = Math.sin(time * 1.5) * 0.15 + 0.85;
+
       ctx.clearRect(0, 0, width, height);
 
-      stars.forEach((star) => {
-        star.x += star.speedX;
-        star.y += star.speedY;
+      // 1. Draw Supernova Horizontal Light Flare
+      const centerX = width * 0.5;
+      const centerY = height * 0.48;
 
-        if (star.x < 0) star.x = width;
-        if (star.x > width) star.x = 0;
-        if (star.y < 0) star.y = height;
-        if (star.y > height) star.y = 0;
+      // Outer wide horizontal disk light
+      const rayGradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, width * 0.45);
+      rayGradient.addColorStop(0, "rgba(255, 255, 255, 0.4)");
+      rayGradient.addColorStop(0.12, "rgba(216, 70, 239, 0.3)");
+      rayGradient.addColorStop(0.35, "rgba(168, 85, 247, 0.18)");
+      rayGradient.addColorStop(0.65, "rgba(59, 130, 246, 0.06)");
+      rayGradient.addColorStop(1, "transparent");
 
-        const currentOpacity = (Math.sin(time * 2 + star.twinkleSpeed * 100) * 0.35 + 0.65) * star.opacity;
+      ctx.save();
+      ctx.translate(centerX, centerY);
+      ctx.scale(2.6, 0.42);
+      ctx.beginPath();
+      ctx.arc(0, 0, width * 0.22 * flarePulse, 0, Math.PI * 2);
+      ctx.fillStyle = rayGradient;
+      ctx.fill();
+      ctx.restore();
+
+      // Blinding Center Starburst Core
+      const coreGradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, 65 * flarePulse);
+      coreGradient.addColorStop(0, "rgba(255, 255, 255, 0.95)");
+      coreGradient.addColorStop(0.2, "rgba(244, 114, 182, 0.75)");
+      coreGradient.addColorStop(0.55, "rgba(168, 85, 247, 0.4)");
+      coreGradient.addColorStop(1, "transparent");
+
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, 65 * flarePulse, 0, Math.PI * 2);
+      ctx.fillStyle = coreGradient;
+      ctx.shadowBlur = 35;
+      ctx.shadowColor = "#d946ef";
+      ctx.fill();
+
+      // Horizontal Lens Flare Beam
+      const beamGradient = ctx.createLinearGradient(centerX - 280 * flarePulse, centerY, centerX + 280 * flarePulse, centerY);
+      beamGradient.addColorStop(0, "transparent");
+      beamGradient.addColorStop(0.5, "rgba(255, 255, 255, 0.8)");
+      beamGradient.addColorStop(1, "transparent");
+
+      ctx.beginPath();
+      ctx.ellipse(centerX, centerY, 280 * flarePulse, 2.5, 0, 0, Math.PI * 2);
+      ctx.fillStyle = beamGradient;
+      ctx.shadowBlur = 18;
+      ctx.shadowColor = "#c084fc";
+      ctx.fill();
+
+      // 2. Draw Stars & Galaxy Particles
+      particles.forEach((p) => {
+        p.x += p.speedX;
+        p.y += p.speedY;
+
+        if (p.x < 0) p.x = width;
+        if (p.x > width) p.x = 0;
+        if (p.y < 0) p.y = height;
+        if (p.y > height) p.y = 0;
+
+        const currentOpacity = (Math.sin(time * 2 + p.twinkleOffset) * 0.35 + 0.65) * p.opacity;
+
+        ctx.save();
         ctx.beginPath();
-        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-        ctx.fillStyle = star.color;
-        ctx.globalAlpha = currentOpacity;
-        ctx.shadowBlur = star.size * 6;
-        ctx.shadowColor = star.color;
+
+        if (p.layer === "bokeh") {
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.globalAlpha = currentOpacity * 0.6;
+          ctx.shadowBlur = p.size * 3;
+          ctx.shadowColor = p.glowColor;
+        } else if (p.layer === "galaxy_band") {
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.globalAlpha = currentOpacity;
+          ctx.shadowBlur = p.size * 4;
+          ctx.shadowColor = p.glowColor;
+        } else {
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.globalAlpha = currentOpacity * 0.8;
+          ctx.shadowBlur = p.size * 2;
+          ctx.shadowColor = p.glowColor;
+        }
+
         ctx.fill();
+        ctx.restore();
+      });
+
+      // 3. Draw Shooting Stars
+      shootingStars.forEach((star) => {
+        if (!star.active) return;
+
+        star.x += Math.cos(star.angle) * star.speed;
+        star.y += Math.sin(star.angle) * star.speed;
+        star.opacity -= 0.015;
+
+        if (star.opacity <= 0 || star.x > width || star.y > height) {
+          star.active = false;
+          return;
+        }
+
+        const tailX = star.x - Math.cos(star.angle) * star.length;
+        const tailY = star.y - Math.sin(star.angle) * star.length;
+
+        const grad = ctx.createLinearGradient(tailX, tailY, star.x, star.y);
+        grad.addColorStop(0, "transparent");
+        grad.addColorStop(1, `rgba(255, 255, 255, ${star.opacity})`);
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(tailX, tailY);
+        ctx.lineTo(star.x, star.y);
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = 2;
+        ctx.shadowBlur = 12;
+        ctx.shadowColor = "#a855f7";
+        ctx.stroke();
+        ctx.restore();
       });
 
       animationFrameId = requestAnimationFrame(render);
@@ -455,22 +664,19 @@ const CosmicGalaxyBackground: React.FC = () => {
 
     return () => {
       window.removeEventListener("resize", handleResize);
+      clearInterval(shootingStarTimer);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
   return (
     <div className="parallax-bg-wrapper">
-      {/* Fullscreen Animated Cosmic Universe Galaxy Layer */}
+      {/* Fullscreen High-Definition Cosmic Space Background Image */}
       <div className="cosmic-galaxy-layer" />
-      {/* Pulsing Cosmic Center Nebula Core */}
-      <div className="cosmic-nebula-core" />
-      {/* Dynamic Twinkling Floating Stardust Canvas */}
+      {/* Real-time Dynamic Glowing Space Canvas */}
       <canvas ref={canvasRef} className="cosmic-stars-canvas" />
-      {/* Ambient Grid Overlay */}
+      {/* Subtle Grid Overlay */}
       <div className="grid-bg-overlay" />
-      {/* Subtle Vignette Overlay for Crisp Readability */}
-      <div className="cosmic-vignette-overlay" />
     </div>
   );
 };
