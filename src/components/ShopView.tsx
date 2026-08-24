@@ -168,7 +168,7 @@ export const ShopView: React.FC<ShopViewProps> = ({
           <Sparkles size={48} className="empty-state-icon" />
           <h3>No Flavors Found</h3>
           <p>We couldn't find any products matching your search query. Try typing another keyword!</p>
-          <button onClick={() => { setSearchQuery(""); onCategoryChange("all"); }} className="btn btn-secondary">
+          <button onClick={() => { onSearchQueryChange(""); onCategoryChange("all"); }} className="btn btn-secondary">
             Reset Filters
           </button>
         </div>

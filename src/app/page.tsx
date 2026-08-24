@@ -397,7 +397,7 @@ const HeroImage: React.FC = () => {
 function AyanUniverseStore() {
   const { setIsCartOpen, cartCount } = useCart();
   const [activeColor, setActiveColor] = useState<string>("#00f0ff"); // Default Cyan
-  const [selectedCategory, setSelectedCategory] = useState<"all" | "juice" | "pod" | "device" | "coil">("all");
+  const [selectedCategory, setSelectedCategory] = useState<"all" | "juice" | "pod" | "device" | "coil" | "accessory">("all");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [checkoutProduct, setCheckoutProduct] = useState<Product | null>(null);
   const [currentView, setCurrentView] = useState<"home" | "shop" | "about" | "faqs" | "contact">("home");
@@ -418,12 +418,13 @@ function AyanUniverseStore() {
     return () => clearInterval(timer);
   }, []);
 
-  const categoryLabels = {
+  const categoryLabels: Record<"all" | "juice" | "pod" | "device" | "coil" | "accessory", string> = {
     all: "All",
     juice: "E-Juices",
     pod: "Pods",
     device: "Devices",
-    coil: "Coils"
+    coil: "Coils",
+    accessory: "Accessories"
   };
 
   useEffect(() => {
