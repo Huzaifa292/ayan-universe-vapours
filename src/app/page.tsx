@@ -37,8 +37,6 @@ import { CheckoutModal } from "../components/CheckoutModal";
 import { CartDrawer } from "../components/CartDrawer";
 import { useCart } from "../context/CartContext";
 
-const ThreeDScene = dynamic(() => import("../components/ThreeDScene").then((m) => m.ThreeDScene), { ssr: false });
-
 const DEMO_PRODUCTS: Product[] = [
   // --- DEVICES ---
   {
