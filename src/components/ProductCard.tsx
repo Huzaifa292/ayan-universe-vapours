@@ -132,10 +132,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onHover, onCl
         <span className="product-flavor-pill" style={{ color: product.color, border: `1px solid ${product.color}40`, backgroundColor: `${product.color}10` }}>
           {product.flavor}
         </span>
-        <h3 className="product-name">{product.name}</h3>
         {product.price && (
-          <div className="product-price" style={{ margin: "6px 0", fontSize: "16px", fontWeight: "800", color: "var(--foreground)" }}>
-            Rs. {product.price.toLocaleString()}
+          <div className="product-price" style={{ margin: "6px 0", display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+            <span style={{ fontSize: "10px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#c084fc", background: "rgba(168, 85, 247, 0.16)", padding: "2px 7px", borderRadius: "6px", border: "1px solid rgba(168, 85, 247, 0.35)" }}>
+              BEST PRICE
+            </span>
+            <span style={{ fontSize: "16px", fontWeight: "900", color: "#ffffff", letterSpacing: "0.5px" }}>
+              Rs. {product.price.toLocaleString()}
+            </span>
           </div>
         )}
 

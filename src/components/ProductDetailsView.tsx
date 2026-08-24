@@ -107,10 +107,14 @@ export const ProductDetailsView: React.FC<ProductDetailsViewProps> = ({
               {product.id.startsWith("device-") ? "Device" : product.id.startsWith("pod-") ? "Pod" : "E-Juice"}
             </span>
             <h1 className="details-title">{product.name}</h1>
-            <p className="details-flavor-subtitle">{product.flavor}</p>
             {product.price && (
-              <div className="details-price" style={{ fontSize: "24px", fontWeight: "800", color: "var(--foreground)", margin: "16px 0" }}>
-                Rs. {product.price.toLocaleString()}
+              <div className="details-price" style={{ display: "flex", alignItems: "center", gap: "10px", margin: "16px 0" }}>
+                <span style={{ fontSize: "12px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1.2px", color: "#c084fc", background: "rgba(168, 85, 247, 0.18)", padding: "4px 10px", borderRadius: "8px", border: "1px solid rgba(168, 85, 247, 0.35)" }}>
+                  BEST PRICE
+                </span>
+                <span style={{ fontSize: "28px", fontWeight: "900", color: "#ffffff", letterSpacing: "0.5px" }}>
+                  Rs. {product.price.toLocaleString()}
+                </span>
               </div>
             )}
 

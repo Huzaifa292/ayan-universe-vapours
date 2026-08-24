@@ -3964,11 +3964,10 @@ a.quick-contact-card:hover .whatsapp-icon {
 
 .hero-twin-pods-img {
   width: 100%;
-  max-width: 440px;
+  max-width: 420px;
   height: auto;
   border-radius: 0 !important;
   object-fit: contain;
   display: block;
-  mix-blend-mode: screen;
-  filter: contrast(1.18) brightness(1.12);
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.75));
 }
