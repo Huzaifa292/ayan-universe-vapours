@@ -34,7 +34,7 @@ export const CartDrawer: React.FC = () => {
 
     // Format cart items for WhatsApp
     const itemsMessage = cart
-      .map((item) => `- ${item.name} (${item.flavor}) x${item.quantity} - Rs. ${(item.price * item.quantity).toLocaleString()}`)
+      .map((item) => `- ${item.name} (${item.flavor}) x${item.quantity} (Best Price)`)
       .join("\n");
 
     const orderMessage = 
@@ -49,7 +49,7 @@ export const CartDrawer: React.FC = () => {
 📦 ORDER ITEMS:
 ${itemsMessage}
 
-💵 TOTAL AMOUNT: Rs. ${cartTotal.toLocaleString()}
+💵 PRICING: Best Price
 💳 PAYMENT METHOD: ${formData.paymentMethod === "cod" ? "Cash on Delivery (COD)" : "Credit/Debit Card (Mock)"}
 -----------------------------------
 Thank you! Please process my order as soon as possible.`;
@@ -136,7 +136,7 @@ Thank you! Please process my order as soon as possible.`;
                               <h4 className="cart-item-name">{item.name}</h4>
                               <p className="cart-item-flavor">{item.flavor}</p>
                               <div className="cart-item-price-actions">
-                                 <span className="cart-item-price">Rs. {item.price.toLocaleString()}</span>
+                                 <span className="cart-item-price" style={{ color: "#c084fc", fontWeight: "800", fontSize: "11px", letterSpacing: "1px" }}>BEST PRICE</span>
                                 <div className="cart-quantity-selector">
                                   <button
                                     onClick={() => updateQuantity(item.id, item.quantity - 1)}
@@ -167,8 +167,8 @@ Thank you! Please process my order as soon as possible.`;
                       {/* Cart Footer / Summary */}
                       <div className="cart-footer">
                         <div className="cart-summary-line">
-                          <span>Subtotal</span>
-                          <span className="cart-subtotal-val">Rs. {cartTotal.toLocaleString()}</span>
+                          <span>Pricing</span>
+                          <span className="cart-subtotal-val" style={{ color: "#c084fc", fontWeight: "800" }}>BEST PRICE</span>
                         </div>
                         <div className="cart-summary-line shipping">
                           <span>Shipping</span>
@@ -177,7 +177,7 @@ Thank you! Please process my order as soon as possible.`;
                         <div className="cart-divider-line" />
                         <div className="cart-summary-line total">
                           <span>Total</span>
-                          <span className="cart-total-val">Rs. {cartTotal.toLocaleString()}</span>
+                          <span className="cart-total-val" style={{ color: "#c084fc", fontWeight: "800" }}>BEST PRICE</span>
                         </div>
                         <button
                           className="btn btn-primary btn-checkout w-full mt-4 btn-glow"
@@ -261,7 +261,7 @@ Thank you! Please process my order as soon as possible.`;
                         Back
                       </button>
                       <button type="submit" className="btn btn-primary btn-glow">
-                        Place Order (Rs. {cartTotal.toLocaleString()})
+                        Place Order (Best Price)
                       </button>
                     </div>
                   </form>

@@ -74,12 +74,9 @@ Thank you! Please process my order as soon as possible.`;
             <img src={product.image} alt={product.name} />
           </div>
           <div className="sum-details">
-            {product.price && (
-              <span className="sum-price" style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontSize: "14px", fontWeight: "700", margin: "4px 0" }}>
-                <span style={{ fontSize: "10px", fontWeight: "800", color: "#c084fc", background: "rgba(168, 85, 247, 0.16)", padding: "1px 6px", borderRadius: "4px" }}>BEST PRICE</span>
-                <span style={{ color: "#ffffff" }}>Rs. {product.price.toLocaleString()}</span>
-              </span>
-            )}
+            <span className="sum-price" style={{ display: "inline-flex", alignItems: "center", fontSize: "11px", fontWeight: "800", color: "#c084fc", background: "rgba(168, 85, 247, 0.18)", padding: "3px 8px", borderRadius: "6px", margin: "4px 0" }}>
+              BEST PRICE
+            </span>
             <span className="sum-flavor-badge" style={{ background: `${product.color}15`, color: product.color }}>
               {product.flavor}
             </span>
