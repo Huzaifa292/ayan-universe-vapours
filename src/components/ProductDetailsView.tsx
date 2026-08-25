@@ -328,14 +328,15 @@ export const ProductDetailsView: React.FC<ProductDetailsViewProps> = ({
                 style={{
                   flex: 1,
                   borderRadius: "30px",
-                  border: "1px solid var(--border-glass)",
-                  background: "var(--bg-glass)",
-                  color: "var(--foreground)",
+                  border: "1px solid rgba(168, 85, 247, 0.35)",
+                  background: "rgba(26, 16, 48, 0.85)",
+                  color: "#ffffff",
                   fontWeight: "700",
                   fontSize: "12px",
                   padding: "12px 0",
                   cursor: "pointer",
-                  minWidth: "110px"
+                  minWidth: "110px",
+                  transition: "all 0.25s ease"
                 }}
               >
                 ADD TO CART
@@ -343,21 +344,28 @@ export const ProductDetailsView: React.FC<ProductDetailsViewProps> = ({
 
               <button
                 onClick={() => onCheckout(product)}
-                className="btn btn-bubble-hover"
+                className="btn btn-primary"
                 style={{
-                  "--btn-bg-color": "var(--foreground)",
-                  "--btn-text-color": "var(--background)",
                   flex: 1,
                   borderRadius: "30px",
-                  fontWeight: "700",
-                  fontSize: "12px",
+                  fontWeight: "800",
+                  fontSize: "13px",
                   padding: "12px 0",
                   cursor: "pointer",
-                  minWidth: "110px"
-                } as React.CSSProperties}
+                  minWidth: "110px",
+                  background: "linear-gradient(135deg, #a855f7 0%, #7c3aed 100%)",
+                  color: "#ffffff",
+                  border: "1px solid rgba(216, 180, 254, 0.4)",
+                  boxShadow: "0 4px 20px rgba(168, 85, 247, 0.45)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "6px",
+                  transition: "all 0.25s ease"
+                }}
               >
-                <span className="bubble-effect" />
-                <span className="btn-content">BUY NOW</span>
+                <ShoppingBag size={15} />
+                <span>BUY NOW</span>
               </button>
             </div>
 
