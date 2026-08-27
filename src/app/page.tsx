@@ -1709,7 +1709,6 @@ function AyanUniverseStore() {
 
           <div className="footer-bottom">
             <span>© {new Date().getFullYear()} Ayan Universe. All rights reserved.</span>
-            <span>Crafted with Next.js, HTML5 & Premium CSS.</span>
           </div>
         </div>
       </footer>
