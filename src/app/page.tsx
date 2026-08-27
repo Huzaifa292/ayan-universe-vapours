@@ -1364,9 +1364,9 @@ function AyanUniverseStore() {
                   <div className="feature-icon-wrapper">
                     <Flame size={24} />
                   </div>
-                  <h3>16ml Liquid Tank</h3>
+                  <h3>3ml Liquid Tank</h3>
                   <p>
-                    Optimized liquid-level transparency lets you easily inspect remaining capacity. Good for 8000+ satisfying puffs.
+                    Optimized liquid-level transparency lets you easily inspect remaining capacity. Engineered for leakproof, rich flavor delivery.
                   </p>
                 </div>
 
