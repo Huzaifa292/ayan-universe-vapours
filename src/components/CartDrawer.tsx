@@ -22,7 +22,10 @@ export const CartDrawer: React.FC = () => {
     email: "",
     phone: "",
     address: "",
-    paymentMethod: "cod",
+    cardNumber: "",
+    cardExpiry: "",
+    cardCvv: "",
+    paymentMethod: "card",
   });
 
   const handleCheckoutSubmit = (e: React.FormEvent) => {
@@ -50,7 +53,8 @@ export const CartDrawer: React.FC = () => {
 ${itemsMessage}
 
 💵 PRICING: Best Price
-💳 PAYMENT METHOD: ${formData.paymentMethod === "cod" ? "Cash on Delivery (COD)" : "Credit/Debit Card (Mock)"}
+💳 PAYMENT METHOD: Credit / Debit Card (Visa / Mastercard / UnionPay)
+🔒 STATUS: Secure Online Card Payment
 -----------------------------------
 Thank you! Please process my order as soon as possible.`;
 
@@ -66,7 +70,7 @@ Thank you! Please process my order as soon as possible.`;
       clearCart();
       setIsCartOpen(false);
       setCheckoutStep("cart");
-      setFormData({ name: "", email: "", phone: "", address: "", paymentMethod: "cod" });
+      setFormData({ name: "", email: "", phone: "", address: "", cardNumber: "", cardExpiry: "", cardCvv: "", paymentMethod: "card" });
     }, 4000);
   };
 
@@ -240,16 +244,74 @@ Thank you! Please process my order as soon as possible.`;
                         required
                       />
                     </div>
-                    <div className="form-group">
-                      <label>Payment Method</label>
-                      <select
-                        name="paymentMethod"
-                        value={formData.paymentMethod}
+                    <div className="form-group" style={{
+                      background: "rgba(20, 14, 38, 0.85)",
+                      border: "1px solid rgba(168, 85, 247, 0.35)",
+                      borderRadius: "14px",
+                      padding: "12px",
+                      marginTop: "10px"
+                    }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                          <CreditCard size={15} color="#c084fc" />
+                          <strong style={{ fontSize: "12px", color: "#fff" }}>Credit / Debit Card</strong>
+                        </div>
+                        <span style={{ fontSize: "10px", color: "#4ade80", fontWeight: "700" }}>256-Bit SSL Encrypted</span>
+                      </div>
+
+                      <input
+                        type="text"
+                        name="cardNumber"
+                        value={formData.cardNumber}
                         onChange={handleInputChange}
-                      >
-                        <option value="cod">Cash on Delivery (COD)</option>
-                        <option value="card">Credit/Debit Card (Mock)</option>
-                      </select>
+                        placeholder="Card Number (XXXX XXXX XXXX XXXX)"
+                        maxLength={19}
+                        style={{
+                          width: "100%",
+                          background: "rgba(10, 6, 20, 0.8)",
+                          border: "1px solid rgba(168, 85, 247, 0.25)",
+                          color: "#fff",
+                          fontSize: "12px",
+                          padding: "8px 10px",
+                          borderRadius: "8px",
+                          marginBottom: "6px"
+                        }}
+                      />
+
+                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6px" }}>
+                        <input
+                          type="text"
+                          name="cardExpiry"
+                          value={formData.cardExpiry}
+                          onChange={handleInputChange}
+                          placeholder="MM / YY"
+                          maxLength={5}
+                          style={{
+                            background: "rgba(10, 6, 20, 0.8)",
+                            border: "1px solid rgba(168, 85, 247, 0.25)",
+                            color: "#fff",
+                            fontSize: "12px",
+                            padding: "8px 10px",
+                            borderRadius: "8px"
+                          }}
+                        />
+                        <input
+                          type="password"
+                          name="cardCvv"
+                          value={formData.cardCvv}
+                          onChange={handleInputChange}
+                          placeholder="CVV"
+                          maxLength={4}
+                          style={{
+                            background: "rgba(10, 6, 20, 0.8)",
+                            border: "1px solid rgba(168, 85, 247, 0.25)",
+                            color: "#fff",
+                            fontSize: "12px",
+                            padding: "8px 10px",
+                            borderRadius: "8px"
+                          }}
+                        />
+                      </div>
                     </div>
 
                     <div className="checkout-actions">

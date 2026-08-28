@@ -39,7 +39,7 @@ export const ContactView: React.FC = () => {
               <div className="card-details">
                 <h4>Store Location</h4>
                 <p className="value-text">DHA Phase 6, Karachi, Pakistan</p>
-                <span className="action-hint">Cash on Delivery available</span>
+                <span className="action-hint">💳 Secure Card Payment available</span>
               </div>
             </div>
 

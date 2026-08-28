@@ -46,7 +46,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeColor }) => {
               </div>
               <div className="corp-text">
                 <h4>Next-Day Nationwide Shipping</h4>
-                <p>Get express cash on delivery shipping across Karachi, Lahore, Islamabad, and other major cities within 24-48 hours.</p>
+                <p>Get express secured shipping with card payment across Karachi, Lahore, Islamabad, and other major cities within 24-48 hours.</p>
               </div>
             </div>
             <div className="corp-feature-item">

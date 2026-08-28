@@ -171,7 +171,7 @@ export const ProductDetailsView: React.FC<ProductDetailsViewProps> = ({
                     </strong>
                   </div>
                   <p style={{ fontSize: "11px", color: "var(--foreground-muted)", marginBottom: "16px", fontWeight: "600" }}>
-                    Cash on delivery available • 1 Day Delivery Available in Karachi.
+                    💳 Secure Card Payment (Visa, Mastercard, UnionPay) • 1 Day Delivery Available in Karachi.
                   </p>
 
                   {/* Timeline Graphic */}
@@ -417,9 +417,9 @@ export const ProductDetailsView: React.FC<ProductDetailsViewProps> = ({
                 gap: "8px"
               }}>
                 <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                  <div style={{ fontSize: "18px", marginBottom: "6px" }}>💵</div>
-                  <strong style={{ fontSize: "9px", color: "var(--foreground)", lineHeight: "1.3", textAlign: "center" }}>Cash On Delivery</strong>
-                  <span style={{ fontSize: "8px", color: "var(--foreground-muted)", marginTop: "1px", textAlign: "center" }}>Across Pak</span>
+                  <div style={{ fontSize: "18px", marginBottom: "6px" }}>💳</div>
+                  <strong style={{ fontSize: "9px", color: "var(--foreground)", lineHeight: "1.3", textAlign: "center" }}>Card Payment</strong>
+                  <span style={{ fontSize: "8px", color: "var(--foreground-muted)", marginTop: "1px", textAlign: "center" }}>100% Encrypted</span>
                 </div>
 
                 <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
