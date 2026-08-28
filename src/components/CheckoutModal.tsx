@@ -131,13 +131,34 @@ Thank you! Please process my order as soon as possible.`;
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
               >
-                <option value="Karachi">Karachi (Express Delivery)</option>
-                <option value="Lahore">Lahore (1-2 Days)</option>
-                <option value="Islamabad">Islamabad (1-2 Days)</option>
-                <option value="Rawalpindi">Rawalpindi (1-2 Days)</option>
-                <option value="Peshawar">Peshawar (2-3 Days)</option>
-                <option value="Faisalabad">Faisalabad (2-3 Days)</option>
-                <option value="Multan">Multan (2-3 Days)</option>
+                <option value="Karachi">Karachi</option>
+                <option value="Lahore">Lahore</option>
+                <option value="Islamabad">Islamabad</option>
+                <option value="Rawalpindi">Rawalpindi</option>
+                <option value="Faisalabad">Faisalabad</option>
+                <option value="Multan">Multan</option>
+                <option value="Peshawar">Peshawar</option>
+                <option value="Quetta">Quetta</option>
+                <option value="Sialkot">Sialkot</option>
+                <option value="Gujranwala">Gujranwala</option>
+                <option value="Hyderabad">Hyderabad</option>
+                <option value="Abbottabad">Abbottabad</option>
+                <option value="Bahawalpur">Bahawalpur</option>
+                <option value="Sargodha">Sargodha</option>
+                <option value="Sukkur">Sukkur</option>
+                <option value="Larkana">Larkana</option>
+                <option value="Sheikhupura">Sheikhupura</option>
+                <option value="Gujrat">Gujrat</option>
+                <option value="Mardan">Mardan</option>
+                <option value="Sahiwal">Sahiwal</option>
+                <option value="Rahim Yar Khan">Rahim Yar Khan</option>
+                <option value="Kasur">Kasur</option>
+                <option value="Dera Ghazi Khan">Dera Ghazi Khan</option>
+                <option value="Nawabshah">Nawabshah</option>
+                <option value="Mirpur">Mirpur (AJK)</option>
+                <option value="Gilgit">Gilgit</option>
+                <option value="Muzaffarabad">Muzaffarabad</option>
+                <option value="Other">Other City</option>
               </select>
             </div>
           </div>
