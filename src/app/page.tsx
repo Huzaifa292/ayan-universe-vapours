@@ -717,8 +717,10 @@ function AyanUniverseStore() {
   const [globalSearchQuery, setGlobalSearchQuery] = useState("");
   const [searchDropdownOpen, setSearchDropdownOpen] = useState(false);
   // Live countdown timer for Top Luxury Flash Sale Banner
+  const [mounted, setMounted] = useState(false);
   const [timeLeft, setTimeLeft] = useState("04:28:15");
   useEffect(() => {
+    setMounted(true);
     let seconds = 4 * 3600 + 28 * 60 + 15;
     const timer = setInterval(() => {
       seconds = seconds > 0 ? seconds - 1 : 4 * 3600;
@@ -828,9 +830,9 @@ function AyanUniverseStore() {
         </div>
         <div className="announcement-text hide-for-medium">
           <span>🔥 FREE Express Delivery Across Karachi on Orders Above <strong>Rs. 3,500</strong> | 100% Genuine Sealed Products</span>
-          <span className="countdown-pill" style={{ background: "rgba(0,0,0,0.25)", padding: "2px 8px", borderRadius: "12px", fontSize: "11px", display: "inline-flex", alignItems: "center", gap: "4px" }}>
+          <span className="countdown-pill" suppressHydrationWarning style={{ background: "rgba(0,0,0,0.25)", padding: "2px 8px", borderRadius: "12px", fontSize: "11px", display: "inline-flex", alignItems: "center", gap: "4px" }}>
             <Clock size={11} />
-            <span>Ends in {timeLeft}</span>
+            <span suppressHydrationWarning>Ends in {mounted ? timeLeft : "04:28:15"}</span>
           </span>
           <span 
             className="announcement-link" 
@@ -843,8 +845,8 @@ function AyanUniverseStore() {
             Shop Deals &rarr;
           </span>
         </div>
-        <div className="announcement-text show-for-medium-flex" style={{ fontSize: "11px" }}>
-          <span>🔥 FREE Express Delivery in Karachi (Rs. 3,500+) • {timeLeft}</span>
+        <div className="announcement-text show-for-medium-flex" suppressHydrationWarning style={{ fontSize: "11px" }}>
+          <span suppressHydrationWarning>🔥 FREE Express Delivery in Karachi (Rs. 3,500+) • {mounted ? timeLeft : "04:28:15"}</span>
         </div>
       </div>
 
