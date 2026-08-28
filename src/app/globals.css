@@ -4219,3 +4219,60 @@ a.quick-contact-card:hover .whatsapp-icon {
   font-size: 11px;
   color: #a1a1aa;
 }
+
+/* =============================================================
+ * 3D REAL-LIFE SPATIAL DEPTH & HOLOGRAPHIC PHYSICS SYSTEM
+ * ============================================================= */
+.hero-3d-stage {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.hero-twin-pods-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.hero-twin-pods-img {
+  transform-style: preserve-3d;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.2s ease;
+}
+
+/* 3D Product Cards Depth */
+.product-card {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  will-change: transform, box-shadow;
+  transition: transform 0.15s ease-out, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.product-graphic-wrapper {
+  transform-style: preserve-3d;
+}
+
+.product-image {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Pillar & Feature Cards 3D Lift */
+.pillar-card, .feature-card {
+  transform-style: preserve-3d;
+  perspective: 900px;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.pillar-card:hover, .feature-card:hover {
+  transform: translateY(-8px) scale(1.025);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 30px rgba(168, 85, 247, 0.35);
+  border-color: rgba(168, 85, 247, 0.6);
+}
+
+.pillar-icon-circle, .feature-icon-wrapper {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pillar-card:hover .pillar-icon-circle,
+.feature-card:hover .feature-icon-wrapper {
+  transform: scale(1.15) rotate(5deg);
+}

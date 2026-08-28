@@ -34,6 +34,7 @@ function getTextColor(hexColor: string): string {
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product, onHover, onClick, onCheckout }) => {
   const cardRef = React.useRef<HTMLDivElement>(null);
+  const [glare, setGlare] = React.useState({ x: 50, y: 50, active: false, rotX: 0, rotY: 0 });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const card = cardRef.current;
@@ -45,19 +46,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onHover, onCl
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
 
-    // Rotation values: max tilt of 12 degrees
-    const rotateX = ((centerY - y) / centerY) * 12;
-    const rotateY = ((x - centerX) / centerX) * -12;
+    const rotateX = ((centerY - y) / centerY) * 14;
+    const rotateY = ((x - centerX) / centerX) * -14;
+    const glareX = (x / rect.width) * 100;
+    const glareY = (y / rect.height) * 100;
 
-    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-    card.style.transition = "transform 0.1s ease-out";
+    setGlare({ x: glareX, y: glareY, active: true, rotX: rotateX, rotY: rotateY });
   };
 
   const handleMouseLeave = () => {
-    const card = cardRef.current;
-    if (!card) return;
-    card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-    card.style.transition = "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)";
+    setGlare({ x: 50, y: 50, active: false, rotX: 0, rotY: 0 });
   };
 
   return (
@@ -72,14 +70,38 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onHover, onCl
         "--product-color": product.color,
         cursor: "pointer",
         transformStyle: "preserve-3d",
-        backfaceVisibility: "hidden"
+        perspective: "1000px",
+        transform: glare.active
+          ? `perspective(1000px) rotateX(${glare.rotX}deg) rotateY(${glare.rotY}deg) scale3d(1.04, 1.04, 1.04) translateZ(15px)`
+          : `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`,
+        transition: glare.active ? "transform 0.08s ease-out" : "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
+        boxShadow: glare.active
+          ? `0 25px 50px rgba(0,0,0,0.85), 0 0 35px ${product.color}40`
+          : undefined,
+        position: "relative",
+        overflow: "hidden"
       } as React.CSSProperties}
     >
+      {/* Holographic 3D Surface Sheen */}
+      {glare.active && (
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: `radial-gradient(circle at ${glare.x}% ${glare.y}%, rgba(255,255,255,0.22) 0%, rgba(168,85,247,0.12) 40%, transparent 70%)`,
+            pointerEvents: "none",
+            zIndex: 15,
+            mixBlendMode: "screen",
+            borderRadius: "inherit"
+          }}
+        />
+      )}
+
       {/* Dynamic Glow Background */}
       <div className="product-glow-bg" style={{ backgroundColor: product.color }} />
 
       {/* Product Spec Badges */}
-      <div className="product-badges">
+      <div className="product-badges" style={{ transform: glare.active ? "translateZ(30px)" : "translateZ(0)", transition: "transform 0.15s ease" }}>
         <span className="badge">
           <Zap size={10} />
           {product.puffs}
@@ -90,17 +112,24 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onHover, onCl
         </span>
       </div>
 
-      {/* Pod Image or Stylized Vector Graphic */}
-      <div className="product-graphic-wrapper">
+      {/* Pod Image or Stylized Vector Graphic with 3D Pop-Out */}
+      <div className="product-graphic-wrapper" style={{ transformStyle: "preserve-3d" }}>
         {product.image ? (
           <img
             src={product.image}
             alt={product.name}
             className="product-image"
-            style={{ width: "100%", height: "100%", objectFit: "contain", filter: "drop-shadow(0 10px 15px rgba(0,0,0,0.5))" }}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "contain",
+              transform: glare.active ? "translateZ(45px) scale(1.08)" : "translateZ(0px) scale(1)",
+              filter: glare.active ? "drop-shadow(0 20px 25px rgba(0,0,0,0.75))" : "drop-shadow(0 10px 15px rgba(0,0,0,0.5))",
+              transition: "transform 0.15s ease-out, filter 0.15s ease-out"
+            }}
           />
         ) : product.id.startsWith("coil-") ? (
-          <div className="product-coil-vector">
+          <div className="product-coil-vector" style={{ transform: glare.active ? "translateZ(40px)" : "none", transition: "transform 0.15s ease" }}>
             <div className="coil-fins" />
             <div className="coil-cylinder" style={{ borderLeft: `2px solid ${product.color}` }}>
               <div className="coil-mesh-core" style={{ boxShadow: `0 0 10px ${product.color}` }} />
@@ -109,14 +138,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onHover, onCl
             <div className="coil-pin" />
           </div>
         ) : product.id.startsWith("accessory-") ? (
-          <div className="product-accessory-vector">
+          <div className="product-accessory-vector" style={{ transform: glare.active ? "translateZ(40px)" : "none", transition: "transform 0.15s ease" }}>
             <div className="accessory-case" style={{ borderColor: product.color }}>
               <div className="accessory-brand">AYAN</div>
             </div>
             <div className="accessory-lanyard" style={{ background: `linear-gradient(to bottom, ${product.color}, #1e293b)` }} />
           </div>
         ) : (
-          <div className="product-device-vector">
+          <div className="product-device-vector" style={{ transform: glare.active ? "translateZ(40px)" : "none", transition: "transform 0.15s ease" }}>
             <div className="vector-cap" />
             <div className="vector-tank" />
             <div className="vector-body" style={{ background: `linear-gradient(135deg, ${product.color}, #1f2937)` }}>
@@ -128,7 +157,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onHover, onCl
       </div>
 
       {/* Product Text info */}
-      <div className="product-info">
+      <div className="product-info" style={{ transform: glare.active ? "translateZ(25px)" : "translateZ(0)", transition: "transform 0.15s ease" }}>
         <span className="product-flavor-pill" style={{ color: product.color, border: `1px solid ${product.color}40`, backgroundColor: `${product.color}10` }}>
           {product.flavor}
         </span>

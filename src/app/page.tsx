@@ -334,6 +334,7 @@ const DEMO_PRODUCTS: Product[] = [
 
 const HeroImage: React.FC = () => {
   const containerRef = React.useRef<HTMLDivElement>(null);
+  const [tilt, setTilt] = React.useState({ x: 0, y: 0, glareX: 50, glareY: 50, active: false });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const el = containerRef.current;
@@ -345,18 +346,16 @@ const HeroImage: React.FC = () => {
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
 
-    const rotateX = ((centerY - y) / centerY) * 15;
-    const rotateY = ((x - centerX) / centerX) * -15;
+    const rotateX = ((centerY - y) / centerY) * 18;
+    const rotateY = ((x - centerX) / centerX) * -18;
+    const glareX = (x / rect.width) * 100;
+    const glareY = (y / rect.height) * 100;
 
-    el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.04, 1.04, 1.04)`;
-    el.style.transition = "transform 0.1s ease-out";
+    setTilt({ x: rotateX, y: rotateY, glareX, glareY, active: true });
   };
 
   const handleMouseLeave = () => {
-    const el = containerRef.current;
-    if (!el) return;
-    el.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-    el.style.transition = "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)";
+    setTilt({ x: 0, y: 0, glareX: 50, glareY: 50, active: false });
   };
 
   return (
@@ -364,24 +363,109 @@ const HeroImage: React.FC = () => {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="hero-twin-pods-container"
+      className="hero-3d-stage"
       style={{
         width: "100%",
+        maxWidth: "500px",
+        perspective: "1200px",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         position: "relative",
-        cursor: "pointer",
-        transformStyle: "preserve-3d",
-        transition: "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)"
+        padding: "20px 0"
       }}
     >
-      <div className="hero-twin-pods-card">
+      <div
+        className="hero-twin-pods-card"
+        style={{
+          position: "relative",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          transformStyle: "preserve-3d",
+          transform: tilt.active
+            ? `perspective(1200px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale3d(1.05, 1.05, 1.05)`
+            : `perspective(1200px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`,
+          transition: tilt.active ? "transform 0.08s ease-out" : "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
+          willChange: "transform"
+        }}
+      >
+        {/* Dynamic Raytraced Glare Spotlight */}
+        {tilt.active && (
+          <div
+            style={{
+              position: "absolute",
+              inset: "-20px",
+              background: `radial-gradient(circle at ${tilt.glareX}% ${tilt.glareY}%, rgba(255,255,255,0.45) 0%, rgba(168,85,247,0.2) 30%, transparent 65%)`,
+              mixBlendMode: "screen",
+              pointerEvents: "none",
+              zIndex: 10,
+              borderRadius: "30px",
+              transition: "background 0.05s ease"
+            }}
+          />
+        )}
+
+        {/* Floating 3D Device Image */}
         <img
           src="/images/hero-twin-pods.png"
           alt="Ayan Universe Twin Cyber Vape Devices"
           className="hero-twin-pods-img"
+          style={{
+            transform: "translateZ(30px)",
+            filter: "drop-shadow(0 25px 45px rgba(0, 0, 0, 0.85))"
+          }}
         />
+
+        {/* 3D Floating Feature Badge Left */}
+        <div
+          style={{
+            position: "absolute",
+            left: "-10px",
+            top: "25%",
+            background: "rgba(18, 12, 34, 0.85)",
+            border: "1px solid rgba(168, 85, 247, 0.45)",
+            backdropFilter: "blur(12px)",
+            padding: "8px 14px",
+            borderRadius: "14px",
+            boxShadow: "0 10px 30px rgba(0,0,0,0.6), 0 0 20px rgba(168,85,247,0.3)",
+            transform: tilt.active ? "translateZ(60px) scale(1.04)" : "translateZ(35px)",
+            transition: "transform 0.15s ease-out",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+            zIndex: 12
+          }}
+          className="hide-for-medium"
+        >
+          <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#00f0ff", boxShadow: "0 0 10px #00f0ff" }} />
+          <span style={{ fontSize: "11px", fontWeight: "800", color: "#ffffff", letterSpacing: "0.5px" }}>Dual Airflow Pro</span>
+        </div>
+
+        {/* 3D Floating Feature Badge Right */}
+        <div
+          style={{
+            position: "absolute",
+            right: "-10px",
+            bottom: "30%",
+            background: "rgba(18, 12, 34, 0.85)",
+            border: "1px solid rgba(168, 85, 247, 0.45)",
+            backdropFilter: "blur(12px)",
+            padding: "8px 14px",
+            borderRadius: "14px",
+            boxShadow: "0 10px 30px rgba(0,0,0,0.6), 0 0 20px rgba(168,85,247,0.3)",
+            transform: tilt.active ? "translateZ(65px) scale(1.04)" : "translateZ(40px)",
+            transition: "transform 0.15s ease-out",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+            zIndex: 12
+          }}
+          className="hide-for-medium"
+        >
+          <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#a855f7", boxShadow: "0 0 10px #a855f7" }} />
+          <span style={{ fontSize: "11px", fontWeight: "800", color: "#ffffff", letterSpacing: "0.5px" }}>900mAh Fast Charge</span>
+        </div>
       </div>
     </div>
   );
